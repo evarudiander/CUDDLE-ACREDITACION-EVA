@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin CUDDLE</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f3f1;
+            color: #333;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .panel {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+        }
+        .login-box {
+            max-width: 420px;
+            margin: 100px auto;
+        }
+        input, button {
+            width: 100%;
+            padding: 12px 14px;
+            margin-top: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+        button {
+            background: #707F62;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background: #B77DC8; }
+        .hidden { display: none; }
+        .mensaje {
+            margin-top: 12px;
+            font-weight: bold;
+            min-height: 20px;
+        }
+        .mensaje.error { color: #a30000; }
+        .mensaje.ok { color: #1f7a35; }
+        .cabecera {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 16px;
+        }
+        .logout {
+            background: #a14c5d;
+            width: auto;
+            padding: 10px 18px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th { background: #707F62; color: white; }
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            background: #d8f0df;
+            color: #1c6b38;
+        }
+        .badge.no {
+            background: #f7dfe3;
+            color: #8b1d31;
+        }
+        .toggle {
+            background: #B77DC8;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loginView" class="panel login-box">
+            <h2>Acceso administrativo</h2>
+            <form id="loginForm">
+                <input type="text" id="usuario" placeholder="Usuario" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <button type="submit">Ingresar</button>
+            </form>
+            <p id="loginMensaje" class="mensaje"></p>
+        </div>
+
+        <div id="adminView" class="panel hidden">
+            <div class="cabecera">
+                <div>
+                    <h2>Consultas recibidas</h2>
+                    <p id="usuarioActual">Usuario: </p>
+                </div>
+                <button id="logoutBtn" class="logout">Cerrar sesión</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Asunto</th>
+                        <th>Mensaje</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaConsultas"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const loginMensaje = document.getElementById('loginMensaje');
+        const loginView = document.getElementById('loginView');
+        const adminView = document.getElementById('adminView');
+        const tablaConsultas = document.getElementById('tablaConsultas');
+        const usuarioActual = document.getElementById('usuarioActual');
+
+        function guardarToken(token, usuario) {
+            localStorage.setItem('cuddleToken', token);
+            localStorage.setItem('cuddleUser', usuario);
+        }
+
+        function obtenerToken() {
+            return localStorage.getItem('cuddleToken');
+        }
+
+        function cerrarSesion() {
+            localStorage.removeItem('cuddleToken');
+            localStorage.removeItem('cuddleUser');
+            adminView.classList.add('hidden');
+            loginView.classList.remove('hidden');
+        }
+
+        async function cargarConsultas() {
+            const token = obtenerToken();
+            if (!token) return;
+
+            const res = await fetch('/api/consultas', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (!res.ok) {
+                cerrarSesion();
+                return;
+            }
+
+            const consultas = await res.json();
+            tablaConsultas.innerHTML = '';
+
+            if (!consultas.length) {
+                tablaConsultas.innerHTML = '<tr><td colspan="8">No hay consultas aún.</td></tr>';
+                return;
+            }
+
+            for (const c of consultas) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${c.id}</td>
+                    <td>${c.nombre}</td>
+                    <td>${c.email}</td>
+                    <td>${c.telefono || '-'}</td>
+                    <td>${c.asunto}</td>
+                    <td>${c.mensaje}</td>
+                    <td>${new Date(c.fecha).toLocaleString()}</td>
+                    <td>
+                        <span class="badge ${c.leida ? '' : 'no'}">${c.leida ? 'Leída' : 'Pendiente'}</span>
+                        <button class="toggle" data-id="${c.id}" data-leida="${c.leida}">${c.leida ? 'Marcar pendiente' : 'Marcar leída'}</button>
+                    </td>
+                `;
+                tablaConsultas.appendChild(tr);
+            }
+        }
+
+        async function cambiarEstado(id, leida) {
+            const token = obtenerToken();
+            const res = await fetch(`/api/consultas/${id}/estado`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ leida: !leida })
+            });
+
+            if (res.ok) {
+                cargarConsultas();
+            }
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const usuario = document.getElementById('usuario').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ usuario, password })
+            });
+
+            const data = await res.json();
+            if (!res.ok) {
+                loginMensaje.textContent = data.error || 'Error al iniciar sesión';
+                loginMensaje.className = 'mensaje error';
+                return;
+            }
+
+            guardarToken(data.token, data.usuario);
+            loginMensaje.textContent = '';
+            usuarioActual.textContent = `Usuario: ${data.usuario}`;
+            loginView.classList.add('hidden');
+            adminView.classList.remove('hidden');
+            cargarConsultas();
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', cerrarSesion);
+        document.addEventListener('click', async (e) => {
+            if (e.target.classList.contains('toggle')) {
+                await cambiarEstado(e.target.dataset.id, e.target.dataset.leida === '1');
+            }
+        });
+
+        const token = obtenerToken();
+        const usuario = localStorage.getItem('cuddleUser');
+        if (token && usuario) {
+            usuarioActual.textContent = `Usuario: ${usuario}`;
+            loginView.classList.add('hidden');
+            adminView.classList.remove('hidden');
+            cargarConsultas();
+        }
+    </script>
+</body>
+</html>

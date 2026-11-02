@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUDDLE - Nosotros te ayudamos a entender</title>
+    <link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+
+  
+    <header class="encabezado-principal">
+        <div class="header-superior">
+            <div class="logo-contenedor">
+                <img src="/logo.png" alt="Logo CUDDLE" class="logo-header">
+            </div>
+            <div class="autor-info">
+                <p>EVA RUDIANDER HERNANDEZ | CUDDLE</p>
+            </div>
+        </div>
+        
+        <div class="hero-titulo">
+            <h1>CUDDLE</h1>
+            <p class="slogan">“Nosotros te ayudamos a entender.”</p>
+        </div>
+
+        <nav class="menu-navegacion">
+            <ul>
+                <li><a href="#presentacion">Presentación</a></li>
+                <li><a href="#quienes-somos">¿Quiénes Somos?</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href ="admin.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+  
+    <main>
+
+        
+        <section id="presentacion" class="seccion-contenedor">
+            <h2>Presentación Personal y Profesional</h2>
+            <article class="tarjeta-presentacion">
+                
+                <div class="texto-presentacion">
+                    <h3>Eva Rudiander Hernández</h3>
+                    <p class="subtitulo-profesional"> Desarrolladora de CUDDLE</p>
+                    <p>
+                        Bienvenido/a a <strong>CUDDLE</strong>. Mi propósito es transformar la relación entre las personas mayores y la tecnología, brindando contención, paciencia y empatía. La informática no debe ser fría ni distante; por ello, nos dedicamos a acompañar paso a paso a nuestros usuarios y a equipar a instituciones con soporte técnico de hardware y redes adaptados a sus necesidades.
+                    </p>
+                </div>
+            </article>
+        </section>
+
+        
+        <section id="quienes-somos" class="seccion-contenedor">
+            <h2>¿Quiénes Somos y Nuestro Objetivo?</h2>
+            <article>
+                <p>
+                    En CUDDLE nos especializamos en la asistencia e instrucción informática personalizada para adultos mayores. Eliminamos el agobio y la dependencia, enseñando el uso de dispositivos de manera pausada y respetuosa. Además, ampliamos nuestro servicio para incluir soporte de infraestructura de hardware y redes para instituciones y particulares.
+                </p>
+                <div class="compromiso-bloque">
+                    <h3>Nuestros Valores Fundamentales</h3>
+                    <ul>
+                        <li><strong>Entorno libre de presiones:</strong> No existen preguntas "obvias".</li>
+                        <li><strong>Fomento de la autonomía:</strong> Para que cada persona gestione sus trámites, correos y recreación.</li>
+                        <li><strong>Adaptabilidad y respeto:</strong> Ajustamos el ritmo y los materiales a la necesidad individual.</li>
+                    </ul>
+                </div>
+            </article>
+        </section>
+
+       
+        <section id="servicios" class="seccion-contenedor">
+            <h2>Servicios que Ofrecemos</h2>
+            <div class="grilla-servicios">
+                <article class="tarjeta-servicio">
+                    <h3>Soporte Técnico & Redes</h3>
+                    <p>Mantenimiento preventivo, diagnóstico de hardware y configuración de conexiones Wi-Fi estables y seguras.</p>
+                </article>
+
+                <article class="tarjeta-servicio">
+                    <h3>Accesibilidad Digital y Ergonomía</h3>
+                    <p>Configuración del sistema operativo con fuentes ampliadas, colores nítidos y adaptación ergonómica de puestos de trabajo.</p>
+                </article>
+
+                <article class="tarjeta-servicio">
+                    <h3>Capacitación en Interfaz y Periféricos</h3>
+                    <p>Enseñanza práctica sobre manejo del mouse, teclado, impresoras, ventanas y carpetas sin frustración.</p>
+                </article>
+
+                <article class="tarjeta-servicio">
+                    <h3>Trámites Digitales y Recreación</h3>
+                    <p>Asistencia para la obtención de turnos médicos, trámites bancarios, lectura de periódicos y conexión con familiares.</p>
+                </article>
+            </div>
+        </section>
+
+        
+        <section class="seccion-contenedor">
+            <h3>Resumen de Áreas de Atención</h3>
+            <table class="tabla-servicios">
+                <thead>
+                    <tr>
+                        <th>Área</th>
+                        <th>Modalidad</th>
+                        <th>Público Objetivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Asistencia Digital</td>
+                        <td>Presencial / Guiada</td>
+                        <td>Adultos Mayores/Usuario Generales</td>
+                    </tr>
+                    <tr>
+                        <td>Soporte Hardware</td>
+                        <td>Técnico Especializado</td>
+                        <td>Particulares e Instituciones</td>
+                    </tr>
+                    <tr>
+                        <td>Redes y Conectividad</td>
+                        <td>Instalación y Blindaje</td>
+                        <td>Hogares y Centros de Día</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        
+        <section id="contacto" class="seccion-contenedor">
+            <h2>Contacto</h2>
+            <form id="formConsultas" class="formulario-contacto">
+                <div class="campo-form">
+                    <label for="nombre">Nombre Completo:</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Ej. Eva Rudiander">
+                </div>
+
+                <div class="campo-form">
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email" required placeholder="cuddle.eva@gmail.com">
+                </div>
+
+                <div class="campo-form">
+                    <label for="telefono">Teléfono (opcional):</label>
+                    <input type="tel" id="telefono" name="telefono" placeholder="Ej. 1541...">
+                </div>
+
+                <div class="campo-form">
+                    <label for="asunto">Asunto:</label>
+                    <input type="text" id="asunto" name="asunto" required placeholder="Ej. Consulta sobre servicio">
+                </div>
+
+                <div class="campo-form">
+                    <label for="mensaje">Mensaje o Consulta:</label>
+                    <textarea id="mensaje" name="mensaje" rows="5" required placeholder="Escriba su consulta aquí..."></textarea>
+                </div>
+
+                <button type="submit" class="boton-enviar">Enviar Consulta</button>
+                <p id="mensajeEnvio" class="mensaje-envio" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <script>
+            const formConsultas = document.getElementById('formConsultas');
+            const mensajeEnvio = document.getElementById('mensajeEnvio');
+
+            formConsultas.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const datos = {
+                    nombre: formConsultas.nombre.value.trim(),
+                    email: formConsultas.email.value.trim(),
+                    telefono: formConsultas.telefono.value.trim(),
+                    asunto: formConsultas.asunto.value.trim(),
+                    mensaje: formConsultas.mensaje.value.trim()
+                };
+
+                if (!datos.nombre || !datos.email || !datos.asunto || !datos.mensaje) {
+                    mensajeEnvio.textContent = 'Complete los campos obligatorios.';
+                    mensajeEnvio.classList.add('error');
+                    return;
+                }
+
+                mensajeEnvio.textContent = 'Enviando consulta...';
+                mensajeEnvio.classList.remove('error');
+
+                try {
+                    const respuesta = await fetch('/api/consultas', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(datos)
+                    });
+
+                    const data = await respuesta.json();
+
+                    if (!respuesta.ok) {
+                        throw new Error(data.error || 'No se pudo enviar la consulta.');
+                    }
+
+                    mensajeEnvio.textContent = data.mensaje || 'Consulta enviada correctamente.';
+                    formConsultas.reset();
+                } catch (error) {
+                    mensajeEnvio.textContent = error.message;
+                    mensajeEnvio.classList.add('error');
+                }
+            });
+        </script>
+
+
+
+  
+        
+    </main>
+
+   
+    <footer class="pie-pagina">
+        <p>Eva Rudiander Hernández</p>
+        <p class="leyenda-obligatoria">Desarrollado por Eva Rudiander Hernández - Programación VI</p>
+    </footer>
+
+</body>
+</html>
